@@ -12,6 +12,7 @@ def search_for_matches():
     continuationToken = dict['continuationToken']
     print(continuationToken)
     return continuationToken, dict
+
 url = input('host: ')
 user = input('login: ')
 passw = input('password: ')
@@ -30,6 +31,6 @@ while True:
     if continuationToken == None:
         break
 print(ids_to_delete)
-#for id in ids_to_delete:
- #   requests.delete(url+'service/rest/v1/components/'+id, auth=(user, passw))
-  #  print('i`ve deleted ', id)
+for id in ids_to_delete:
+    requests.delete(url+'service/rest/v1/components/'+id, auth=(user, passw))
+    print('i`ve deleted ', id)
