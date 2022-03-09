@@ -1,6 +1,7 @@
 import requests
 
 def search_for_matches():
+    global components_response, vers_pr, name_pr, continuationToken
     dict=components_response.json()
     for i in range (len(dict['items'])):
         if dict['items'][i]['version'].find(vers_pr)>=0:
@@ -11,7 +12,6 @@ def search_for_matches():
     continuationToken = dict['continuationToken']
     print(continuationToken)
     return continuationToken, dict
-    
 url = input('host: ')
 user = input('login: ')
 passw = input('password: ')
