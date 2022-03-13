@@ -12,10 +12,10 @@ def search_for_matches(vers_pr,name_pr):
     print(continuationToken)
     return continuationToken, dict
     
-url = 'https://repository.crest-wave.com/'#input('host: ')
-user = 'a.novikov'#input('login: ')
-passw = 'vY6YYMudctpcfeC'#input('password: ')
-repo = 'docker-snapshots'#input('choose repository to clean: ')
+url = input('host: ')
+user = input('login: ')
+passw = input('password: ')
+repo = input('choose repository to clean: ')
 vers_pr = input('version: ')
 name_pr =input('name: ')
 ids_to_delete=[]
