@@ -10,6 +10,7 @@ def url_checker():
     return sl
 
 def search_for_matches(vers_pr,name_pr):
+    global continuationToken
     dict=components_response.json()
     for i in range (len(dict['items'])):
         if dict['items'][i]['version'].find(vers_pr)>=0:
