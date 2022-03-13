@@ -1,6 +1,10 @@
 import requests
 
+<<<<<<< Updated upstream
 def checker():
+=======
+def url_checker():
+>>>>>>> Stashed changes
     global url,sl
     a=list(url)
     if a[-1]!='/':
@@ -10,7 +14,10 @@ def checker():
     return sl
 
 def search_for_matches(vers_pr,name_pr):
+<<<<<<< Updated upstream
     global continuationToken,dict
+=======
+>>>>>>> Stashed changes
     dict=components_response.json()
     for i in range (len(dict['items'])):
         if dict['items'][i]['version'].find(vers_pr)>=0:
@@ -29,7 +36,11 @@ repo = input('choose repository to clean: ')
 vers_pr = input('version: ')
 name_pr =input('name: ')
 ids_to_delete=[]
+<<<<<<< Updated upstream
 checker()
+=======
+url_checker()
+>>>>>>> Stashed changes
 components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw))
 search_for_matches(vers_pr,name_pr)
 print('next page')
