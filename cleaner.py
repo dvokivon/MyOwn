@@ -1,5 +1,14 @@
 import requests
 
+def checker():
+    global url,sl
+    a=list(url)
+    if a[-1]!='/':
+        sl='/'
+    else:
+        sl=''
+    return sl
+
 def search_for_matches(vers_pr,name_pr):
     dict=components_response.json()
     for i in range (len(dict['items'])):
@@ -20,11 +29,12 @@ vers_pr = input('version: ')
 name_pr =input('name: ')
 ids_to_delete=[]
 continuationToken = 0
-components_response = requests.get(url+'service/rest/v1/components?repository='+repo,auth=(user, passw))
+checker()
+components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw))
 search_for_matches(vers_pr,name_pr)
 print('next page')
 while True:
-    components_response = requests.get(url+'service/rest/v1/components?repository='+repo,auth=(user, passw),params={'continuationToken':continuationToken})
+    components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw),params={'continuationToken':continuationToken})
     search_for_matches(vers_pr,name_pr)  
     print('next page')
     if continuationToken == None:
