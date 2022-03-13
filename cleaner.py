@@ -1,7 +1,15 @@
 import requests
 
-def search_for_matches():
-    global components_response, vers_pr, name_pr, continuationToken
+def checker():
+    global url,sl
+    a=list(url)
+    if a[-1]!='/':
+        sl='/'
+    else:
+        sl=''
+    return sl
+
+def search_for_matches(vers_pr,name_pr):
     dict=components_response.json()
     for i in range (len(dict['items'])):
         if dict['items'][i]['version'].find(vers_pr)>=0:
@@ -12,7 +20,7 @@ def search_for_matches():
     continuationToken = dict['continuationToken']
     print(continuationToken)
     return continuationToken, dict
-
+    
 url = input('host: ')
 user = input('login: ')
 passw = input('password: ')
@@ -20,13 +28,13 @@ repo = input('choose repository to clean: ')
 vers_pr = input('version: ')
 name_pr =input('name: ')
 ids_to_delete=[]
-continuationToken = 0
-components_response = requests.get(url+'service/rest/v1/components?repository='+repo,auth=(user, passw))
-search_for_matches()
+checker()
+components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw))
+search_for_matches(vers_pr,name_pr)
 print('next page')
 while True:
-    components_response = requests.get(url+'service/rest/v1/components?repository='+repo,auth=(user, passw),params={'continuationToken':continuationToken})
-    search_for_matches()  
+    components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw),params={'continuationToken':continuationToken})
+    search_for_matches(vers_pr,name_pr)  
     print('next page')
     if continuationToken == None:
         break
