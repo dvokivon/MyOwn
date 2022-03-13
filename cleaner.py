@@ -28,7 +28,6 @@ repo = input('choose repository to clean: ')
 vers_pr = input('version: ')
 name_pr =input('name: ')
 ids_to_delete=[]
-continuationToken = 0
 checker()
 components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw))
 search_for_matches(vers_pr,name_pr)
