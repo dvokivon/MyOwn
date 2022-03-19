@@ -7,7 +7,6 @@ def url_checker():
         sl='/'
     else:
         sl=''
-    return sl
 
 def search_for_matches(vers_pr,name_pr):
     global continuationToken
