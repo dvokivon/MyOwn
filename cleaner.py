@@ -7,9 +7,11 @@ def url_checker():
         sl='/'
     else:
         sl=''
+    return sl
 
 def search_for_matches(vers_pr,name_pr):
     global continuationToken
+    components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw),params={'continuationToken':continuationToken})
     dict=components_response.json()
     for i in range (len(dict['items'])):
         if dict['items'][i]['version'].find(vers_pr)>=0:
@@ -30,7 +32,6 @@ ids_to_delete=[]
 url_checker()
 continuationToken = None
 while True:
-    components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw),params={'continuationToken':continuationToken})
     search_for_matches(vers_pr, name_pr)  
     print('next page')
     if continuationToken == None:
