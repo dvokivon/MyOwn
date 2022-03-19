@@ -7,7 +7,6 @@ def url_checker():
         sl='/'
     else:
         sl=''
-    return sl
 
 def search_for_matches(vers_pr,name_pr):
     global continuationToken
@@ -20,7 +19,6 @@ def search_for_matches(vers_pr,name_pr):
             else: ids_to_delete.append(dict['items'][i]['id'])
     continuationToken = dict['continuationToken']
     print(continuationToken)
-    return continuationToken, dict
     
 url = input('host: ')
 user = input('login: ')
@@ -30,12 +28,10 @@ vers_pr = input('version: ')
 name_pr =input('name: ')
 ids_to_delete=[]
 url_checker()
-components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw))
-search_for_matches(vers_pr,name_pr)
-print('next page')
+continuationToken = None
 while True:
     components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw),params={'continuationToken':continuationToken})
-    search_for_matches(vers_pr,name_pr)  
+    search_for_matches(vers_pr, name_pr)  
     print('next page')
     if continuationToken == None:
         break
