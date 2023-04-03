@@ -1,0 +1,58 @@
+import os
+import time
+import subprocess
+import select
+import smtplib,ssl
+import sys
+
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+#параметры SMTP-сервера и учетную запись отправителя
+smtp_server = 'mail.crest-wave.com'
+smtp_port = 993
+smtp_username = 'alert@crestwavetech.ru'
+smtp_password = 'password'
+
+#параметры электронного письма
+to_address = sys.argv[3]
+subject = 'Exception Error'
+body = 'This is a test email from Python.'
+
+#объект MIMEMultipart для комбинирования текста и заголовков
+message = MIMEMultipart()
+message['From'] = smtp_username
+message['To'] = to_address
+message['Subject'] = subject
+
+
+while True:
+    x=os.stat('platform.log').st_mtime
+    f = subprocess.Popen(['tail','-F','platform.log'],
+            stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    p = select.poll()
+    p.register(f.stdout)
+
+    while True:
+        if p.poll(15):
+            if sys.argv[4] in f.stdout.readline():
+                print('i have found, i am trying to send it')
+                body = ssl.create_default_context()
+                with smtplib.SMTP(sys.argv[0], sys.argv[1]) as server:
+                    #тело сообщения в формате MIMEText
+                    message.attach(MIMEText(body))
+                    server.starttls(context=body)
+                    #соединение с SMTP-сервером, аутентификация и отправка сообщения
+                    server.login(smtp_username, smtp_password)
+                    server.sendmail(smtp_username, sys.argv[3], f.stdout.readline())
+                    print('Email sent successfully')
+        try:
+            y=os.stat('platform.log').st_mtime
+            if x!=y:
+                break
+        except:
+            time.sleep(1)
+            
+
+
