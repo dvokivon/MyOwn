@@ -9,8 +9,12 @@ def url_checker():
         sl=''
 
 def search_for_matches(vers_pr,name_pr):
+<<<<<<< Updated upstream
     global continuationToken
     components_response = requests.get(url+sl+'service/rest/v1/components?repository='+repo,auth=(user, passw),params={'continuationToken':continuationToken})
+=======
+    global continuationToken, dict
+>>>>>>> Stashed changes
     dict=components_response.json()
     for i in range (len(dict['items'])):
         if dict['items'][i]['version'].find(vers_pr)>=0:
